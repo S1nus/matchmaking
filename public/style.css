@@ -11,6 +11,14 @@ button {
   border-color: black;
   border-width: 2px;
   cursor: pointer;
+  margin: 5px auto;
+  display: block;
+}
+ul {
+  list-style-type: none;
+}
+ul li {
+  display: inline;
 }
 a {
   font-weight: 400;
@@ -39,4 +47,15 @@ button:active {
   outline: none;
   padding: 5px;
   border-radius: 10px;
+}
+
+#content table, th, td {
+  border-style: solid;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+#content th, td {
+  width: 100px;
+  text-align: center;
 }

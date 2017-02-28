@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title>Chi Phi Foosball ELO Ranking</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBlawUsiL83pxBJHKZzaQ8rwJoPu6QD-TY",
+      authDomain: "foosball-elo-55286.firebaseapp.com",
+      databaseURL: "https://foosball-elo-55286.firebaseio.com/",
+      storageBucket: "foosball-elo-55286.appspot.com",
+      messagingSenderId: "545266218124"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      init();
+    });
+    function init() {
+      database = firebase.database();
+      gameSelector = document.getElementById("gameSelector");
+
+      ref = database.ref("/games");
+      ref.once("value").then(function(snapshot) {
+        snapshot.forEach(function(each) {
+          var newOption = document.createElement("option");
+          newOption.value = each.val().name;
+          newOption.appendChild(document.createTextNode(each.val().name));
+          gameSelector.appendChild(newOption);
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <div id="content">
+    <h1>Leaderboard: </h1>
+    <div class="element">
+      <select id="gameSelector">
+      </select>
+    </div>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Rank</th>
+      </tr>
+      <tr>
+        <td>Connor</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Jack</td>
+        <td>2</td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

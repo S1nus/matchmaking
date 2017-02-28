@@ -17,22 +17,22 @@
   </script>
   <script type="text/javascript">
     function init() {
-      submitButton = document.getElementById("newPlayerButton");
-      nameField = document.getElementById("playerNameInput");
+      submitButton = document.getElementById("newGameButton");
+      nameField = document.getElementById("gameNameInput");
       submitButton.addEventListener("click", function() {
-        addPlayer(nameField.value);
+        addGame(nameField.value);
       });
       database = firebase.database();
     }
-    function addPlayer(name) {
+    function addGame(name) {
       nameField.value = "";
-      var playerData = {
+      var gameData = {
         name: name,
       };
-      var newKey = database.ref("/players").push().key;
+      var newKey = database.ref("/games").push().key;
       var updates = {};
-      updates['/players/'+newKey] = playerData;
-      alert("added player");
+      updates['/games/'+newKey] = gameData;
+      alert("added game");
       return database.ref().update(updates);
     }
   </script>
@@ -44,9 +44,9 @@
 </head>
 <body>
   <div id="content">
-    <div class="element">Player name: <input type="text" id="playerNameInput" placeholder="Jackass Blowjob"/></div>
+    <div class="element">Game name: <input type="text" id="gameNameInput" placeholder="Ping pong"/></div>
     <br>
-    <button id="newPlayerButton" onclick="addGame">Add Player</button>
+    <button id="newGameButton" onclick="addGame">Add Game</button>
     <button onclick="location.href='index.html'">Return to Home</button>
   </div>
 </body>

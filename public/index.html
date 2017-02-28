@@ -19,22 +19,92 @@
     document.addEventListener("DOMContentLoaded", function() {
       init();
     });
+    function init() {
+      players = [];
+      games = [];
+      database = firebase.database();
+
+      ref = database.ref("/players");
+      ref.once("value").then(function(snapshot) {
+        snapshot.forEach(function(each) {
+          players.push(each.val().name);
+        });
+        for (var i = 0; i<players.length; i++) {
+          var newOption = document.createElement("option");
+          var otherNewOption = document.createElement("option");
+          newOption.value = players[i];
+          otherNewOption.value = players[i];
+          newOption.appendChild(document.createTextNode(players[i]));
+          otherNewOption.appendChild(document.createTextNode(players[i]));
+          winnerSelector.appendChild(newOption);
+          loserSelector.appendChild(otherNewOption);
+        }
+      });
+      ref = database.ref("/games");
+      ref.once("value").then(function(snapshot) {
+        snapshot.forEach(function(each) {
+          games.push(each.val().name);
+        });
+        for (var i = 0; i<games.length; i++) {
+          var newOption = document.createElement("option");
+          newOption.value = games[i];
+          newOption.appendChild(document.createTextNode(games[i]));
+          gameSelector.appendChild(newOption);
+        }
+      });
+      content = document.getElementById("content");
+      originalContent = content.innerHTML;
+      gameSelector = document.getElementById("gameSelector");
+      winnerSelector = document.getElementById("winnerSelector");
+      loserSelector = document.getElementById("loserSelector");
+      submitButton = document.getElementById("submitButton");
+      submitButton.addEventListener("click", function() {
+        submitMatch(gameSelector.value, winnerSelector.value, loserSelector.value);
+      });
+
+      newHeader = document.createElement("h1");
+      newHeader.id = "matchSubmitted";
+      newHeader.appendChild(document.createTextNode("Match Submitted"));
+      submitAnother = document.createElement("button");
+      submitAnother.appendChild(document.createTextNode("Submit Another"));
+      submitAnother.addEventListener("click", function() {
+        content.innerHTML = originalContent;
+        init();
+      });
+    }
+    function submitMatch(game, winner, loser) {
+      content.innerHTML = "";
+      content.appendChild(newHeader);
+      content.appendChild(submitAnother);
+      var matchData = {
+        game: game,
+        winner: winner,
+        loser: loser
+      };
+      var newKey = database.ref("/matches").push().key;
+      var updates = {};
+      updates['/matches/'+newKey] = matchData;
+      return database.ref().update(updates);
+    }
   </script>
-  <script type="text/javascript" src="main.js"></script>
 </head>
 <body>
   <div id="content">
     <h1>ΧΦ ELO</h1>
-    <a href="newplayer.html">New Player</a>
+    <ul>
+      <li><a href="newplayer.html">New Player</a></li>
+      <li>&#9679;</li>
+      <li><a href="newgame.html">New Game</a></li>
+      <li>&#9679;</li>
+      <li><a href="leaderboard.html">View Leaderboard</a></li>
+    </ul>
+    <br>
     <div class="element">Game:
       <select id="gameSelector">
-        <option value="Foosball">Foosball</option>
-        <option value="Beirut">Beirut</option>
-        <option value="Ping Pong">Ping Pong</option>
       </select>
     </div><br>
-    <div class="element">Winner: <select id="winnerSelector"><option value="Connor">Connor</option></select></div><br>
-    <div class="element">Loser: <select id="loserSelector"><option value="Jack">Jack</option></select></div><br>
+    <div class="element">Winner: <select id="winnerSelector"></select></div><br>
+    <div class="element">Loser: <select id="loserSelector"></select></div><br>
     <button id="submitButton">Update Rankings</button>
   </div>
 </body>
