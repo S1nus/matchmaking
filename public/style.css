@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+button {
+  border-radius: 10px;
+  background-color: white;
+  outline: none;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  cursor: pointer;
+}
+a {
+  font-weight: 400;
+  color: grey;
+  text-decoration: none;
+}
+a:hover {
+  color: darkgrey;
+}
+button:hover {
+  background-color: darkgrey;
+}
+button:active {
+  background-color: lightgrey;
+}
+#content {
+  font-family: "Roboto";
+  text-align: center;
+  margin: 100px auto;
+}
+#content .element {
+  display: inline-block;
+  margin: 10px auto;
+}
+#content select {
+  outline: none;
+  padding: 5px;
+  border-radius: 10px;
+}

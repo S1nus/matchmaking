@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>Chi Phi Foosball ELO Ranking</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBlawUsiL83pxBJHKZzaQ8rwJoPu6QD-TY",
+      authDomain: "foosball-elo-55286.firebaseapp.com",
+      databaseURL: "https://foosball-elo-55286.firebaseio.com/",
+      storageBucket: "foosball-elo-55286.appspot.com",
+      messagingSenderId: "545266218124"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      init();
+    });
+  </script>
+  <script type="text/javascript" src="main.js"></script>
+</head>
+<body>
+  <div id="content">
+    <div class="element">Player name: <input type="text" id="playerNameInput" /></div>
+    <br>
+    <button id="newPlayerButton" onclick="addPlayer">Add Player</button>
+  </div>
+</body>
+</html>
