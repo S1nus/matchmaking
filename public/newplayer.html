@@ -20,14 +20,17 @@
       submitButton = document.getElementById("newPlayerButton");
       nameField = document.getElementById("playerNameInput");
       submitButton.addEventListener("click", function() {
-        addPlayer(nameField.value);
+        ref = database.ref("/players");
+        ref.once("value").then(function(snapshot) {
+          addPlayer(nameField.value, snapshot.numChildren());
+        });
       });
       database = firebase.database();
     }
-    function addPlayer(name) {
+    function addPlayer(name, rank) {
       nameField.value = "";
       var playerData = {
-        name: name,
+        name: name
       };
       var newKey = database.ref("/players").push().key;
       var updates = {};
@@ -46,7 +49,7 @@
   <div id="content">
     <div class="element">Player name: <input type="text" id="playerNameInput" placeholder="Jackass Blowjob"/></div>
     <br>
-    <button id="newPlayerButton" onclick="addGame">Add Player</button>
+    <button id="newPlayerButton" onclick="addPlayer">Add Player</button>
     <button onclick="location.href='index.html'">Return to Home</button>
   </div>
 </body>

@@ -32,6 +32,21 @@
           gameSelector.appendChild(newOption);
         });
       });
+
+      ranktable = document.getElementById("ranktable");
+      pref = database.ref("/players");
+      pref.once("value").then(function(snapshot) {
+        snapshot.forEach(function(each) {
+          var newRow = document.createElement("tr");
+          var nameCell = document.createElement("td");
+          var rankCell = document.createElement("td");
+          nameCell.appendChild(document.createTextNode(each.val().name));
+          rankCell.appendChild(document.createTextNode(each.val().rank));
+          newRow.appendChild(nameCell);
+          newRow.appendChild(rankCell);
+          ranktable.appendChild(newRow);
+        });
+      });
     }
   </script>
 </head>
@@ -42,20 +57,13 @@
       <select id="gameSelector">
       </select>
     </div>
-    <table>
+    <table id="ranktable">
       <tr>
         <th>Name</th>
         <th>Rank</th>
       </tr>
-      <tr>
-        <td>Connor</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>Jack</td>
-        <td>2</td>
-      </tr>
     </table>
+    <button onclick="location.href='index.html'">Return to Home</button>
   </div>
 </body>
 </html>
